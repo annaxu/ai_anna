@@ -19,18 +19,18 @@ db_path =  "data/vectordb/"
 env_path = os.getenv("HOME") + "/Documents/src/openai/.env"
 
 
-# def load_pdf_splitter():
-#   loader = PyPDFLoader(os.path.join(work_dir, pdf_file_name))
-#   pages = loader.load()
-#   text_splitter = CharacterTextSplitter(separator ="\n",chunk_size=1000,chunk_overlap=150)
-#   docs = text_splitter.split_documents(pages)
-#   return docs
+def load_pdf_splitter():
+  loader = PyPDFLoader(os.path.join(work_dir, pdf_file_name))
+  pages = loader.load()
+  text_splitter = CharacterTextSplitter(separator ="\n",chunk_size=1000,chunk_overlap=150)
+  docs = text_splitter.split_documents(pages)
+  return docs
 
 @st.cache_resource
 def initialize_data():
-    #split_docs = load_pdf_splitter()
-   #  db = FAISS.from_documents(split_docs, AzureOpenAIEmbeddings())
-   #  db.save_local(db_path)
+    split_docs = load_pdf_splitter()
+    db = FAISS.from_documents(split_docs, AzureOpenAIEmbeddings())
+    db.save_local(db_path)
 
     new_db = FAISS.load_local(db_path, AzureOpenAIEmbeddings())
     llm = AzureChatOpenAI(model_name="gpt-35-turbo", temperature=0.5)
