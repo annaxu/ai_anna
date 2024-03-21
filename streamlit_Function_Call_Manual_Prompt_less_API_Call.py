@@ -32,8 +32,6 @@ global llm
 global new_db
 global client
 
-
-
 #@tool
 def online_search(query_content:str):
 
